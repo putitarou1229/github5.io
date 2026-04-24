@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>予約状況</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="reserve.css">
+
+    <!-- カレンダーCSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+
+<body>
+
+    <section class="reserve">
+
+        <h2>Reservation</h2>
+        <p>ご希望の日時をお選びください</p>
+
+        <!-- カレンダー -->
+        <input type="text" id="calendar" placeholder="日付を選択">
+
+        <!-- メニュー選択 -->
+        <select id="menuSelect">
+            <option value="">メニューを選択</option>
+            <option value="cut">カット（30分）</option>
+            <option value="color">カラー（90分）</option>
+            <option value="cut&color">カット+カラー（120分）</option>
+        </select>
+        <p id="priceDisplay">料金：--円</p>
+
+        <div id="timeArea"></div>
+        <!-- 時間表示 -->
+        <div id="timeArea"></div>
+
+        <!-- フォーム -->
+        <div id="formArea" class="form-area">
+            <h2>予約フォーム</h2>
+
+            <form>
+                <input type="text" placeholder="お名前" required>
+                <input type="email" placeholder="メールアドレス" required>
+
+                <input type="text" id="selectedDate" readonly>
+                <input type="text" id="selectedTime" readonly>
+                <input type="text" id="selectedMenu" readonly>
+
+                <textarea placeholder="ご要望"></textarea>
+
+                <button type="submit" class="btn">予約する</button>
+            </form>
+        </div>
+
+        <a href="index.html" class="btn">トップに戻る</a>
+
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+// メニュー情報（時間＋料金）
+const menuData = {
+  cut: { price: 4000, times: ["10:00","11:00","12:00","13:00","14:00"] },
+  color: { price: 8000, times: ["10:00","13:00"] },
+  "cut&color": { price: 12000, times: ["10:00"] }
+};
+
+let reservations = JSON.parse(localStorage.getItem("reservations")) || {};
+
+// カレンダー
+flatpickr("#calendar", {
+  dateFormat: "m/d",
+  onChange: (selectedDates, dateStr) => showTime(dateStr)
+});
+
+// メニュー変更
+document.getElementById("menuSelect").addEventListener("change", () => {
+
+  const menu = document.getElementById("menuSelect").value;
+
+  if (!menu) {
+    document.getElementById("priceDisplay").innerText = "料金：--円";
+    return;
+  }
+
+  document.getElementById("priceDisplay").innerText =
+    "料金：" + menuData[menu].price + "円";
+
+  const date = document.getElementById("calendar").value;
+  if (date) showTime(date);
+});
+
+// 時間表示
+function showTime(date) {
+
+  const menu = document.getElementById("menuSelect").value;
+
+  if (!menu) {
+    document.getElementById("timeArea").innerHTML = "先にメニューを選択してください";
+    return;
+  }
+
+  const times = menuData[menu].times;
+
+  if (!reservations[date]) reservations[date] = {};
+  if (!reservations[date][menu]) {
+    reservations[date][menu] = {};
+    times.forEach(t => reservations[date][menu][t] = "○");
+  }
+
+  let html = `<h3>${date} の空き時間</h3>`;
+
+  times.forEach(time => {
+    if (reservations[date][menu][time] === "○") {
+      html += `<div class="time" onclick="selectTime('${date}','${time}')">${time}</div>`;
+    } else {
+      html += `<div class="time full">${time}</div>`;
+    }
+  });
+
+  document.getElementById("timeArea").innerHTML = html;
+}
+
+// 時間選択
+function selectTime(date, time) {
+
+  const select = document.getElementById("menuSelect");
+  const menuValue = select.value;
+  const menuText = select.options[select.selectedIndex].text;
+
+  document.getElementById("formArea").classList.add("active");
+
+  document.getElementById("selectedDate").value = date;
+  document.getElementById("selectedTime").value = time;
+  document.getElementById("selectedMenu").value = menuText;
+  document.getElementById("selectedPrice").value =
+    menuData[menuValue].price + "円";
+}
+
+// 予約処理
+document.querySelector("form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const date = document.getElementById("selectedDate").value;
+  const time = document.getElementById("selectedTime").value;
+  const menu = document.getElementById("menuSelect").value;
+
+  reservations[date][menu][time] = "×";
+
+  localStorage.setItem("reservations", JSON.stringify(reservations));
+
+  alert("予約完了しました");
+
+  showTime(date);
+});
+</script>
+
+</body>
+</html>

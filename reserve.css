@@ -1,0 +1,121 @@
+:root {
+  --main-black: #0f0f0f;
+  --gold: #c9a96e;
+  --sub-gold: #e5c07b;
+  --white: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: 'Noto Sans JP', sans-serif;
+  line-height: 1.7;
+  background: var(--main-black);
+  color: var(--white);
+}
+
+
+/* 予約ページ */
+.reserve {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+
+
+/* カレンダー */
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(3, 120px);
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.day {
+    background: #1a1a1a;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* 空きあり */
+.ok {
+    color: #4caf50;
+    font-size: 24px;
+}
+
+/* 満席 */
+.ng {
+    color: #f44336;
+    font-size: 24px;
+}
+
+.day:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+.form-area form {
+    max-width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-area input,
+.form-area textarea {
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+}
+
+#calendar {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 20px auto;
+  display: block;
+}
+
+.time {
+  display: inline-block;
+  margin: 10px;
+  padding: 15px 25px;
+  background: #111;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+  border: 1px solid #333;
+}
+
+/* ホバーで浮く */
+.time:hover {
+  background: #222;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* ○（予約可能） */
+.time::after {
+  content: " ○";
+  color: #00ff99;
+}
+
+/* ×（予約不可） */
+.time.full {
+  background: #333;
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* ×の表示 */
+.time.full::after {
+  content: " ×";
+  color: red;
+}
+
