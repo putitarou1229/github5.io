@@ -26,7 +26,8 @@ section {
   margin: auto;
 }
 
-h1, h2 {
+h1,
+h2 {
   margin-bottom: 20px;
   font-family: 'Playfair Display', serif;
 }
@@ -53,7 +54,7 @@ h2::after {
 header {
   position: fixed;
   width: 100%;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   color: white;
   display: flex;
   justify-content: space-between;
@@ -90,7 +91,7 @@ nav a {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .hero-content {
@@ -116,8 +117,9 @@ nav a {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
 }
+
 /* ボタン */
 .btn {
   display: inline-block;
@@ -129,17 +131,19 @@ nav a {
   text-decoration: none;
   font-weight: bold;
 }
+
 .btn {
   background: linear-gradient(45deg, var(--gold), var(--sub-gold));
   color: #000;
   border-radius: 30px;
 }
+
 /* =========================
    メニュー
 ========================= */
 .menu {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
 }
 
@@ -148,12 +152,13 @@ nav a {
   border: 1px solid #333;
   border-radius: 10px;
 }
+
 /* =========================
    スタイル
 ========================= */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
 }
 
@@ -163,7 +168,7 @@ nav a {
   gap: 20px;
   max-width: 900px;
   margin: auto;
-  height: 400px;
+  height: auto;
 }
 
 
@@ -214,10 +219,18 @@ footer {
   padding: 20px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
 /* =========================
    スマホ対応
 ========================= */
-@media(max-width:768px){
+@media(max-width:768px) {
 
   header {
     flex-direction: column;
@@ -238,5 +251,73 @@ footer {
 
   .btn {
     width: 80%;
+  }
+
+  section {
+    padding: 40px 15px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  /* ヘッダー */
+  header h1 {
+    font-size: 16px;
+  }
+
+  nav a {
+    font-size: 13px;
+    margin: 5px;
+  }
+
+  /* ファーストビュー */
+  .hero {
+    height: 80vh;
+  }
+
+  .hero h2 {
+    font-size: 22px;
+  }
+
+  .hero p {
+    font-size: 13px;
+  }
+
+  /* ボタン */
+  .btn {
+    width: auto;
+    max-width: 200px;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* ギャラリー（←超重要） */
+  .gallery {
+    grid-template-columns: 1fr;
+    /* 1列にする */
+    height: auto;
+  }
+
+  .gallery img {
+    height: auto;
+  }
+
+  /* メニューカード */
+  .card {
+    padding: 15px;
+  }
+
+  /* フォーム */
+  .form {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .form input,
+  .form select,
+  .form textarea {
+    font-size: 16px;
+    /* iPhoneズーム防止 */
   }
 }

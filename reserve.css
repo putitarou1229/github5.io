@@ -119,3 +119,57 @@ body {
   color: red;
 }
 
+/* =========================
+   レスポンシブ対応
+========================= */
+
+/* タブレット */
+@media (max-width: 768px) {
+  .calendar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .day {
+    font-size: 16px;
+    padding: 15px;
+  }
+
+  .time {
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+}
+
+/* スマホ */
+@media (max-width: 480px) {
+  .reserve {
+    padding: 60px 15px;
+  }
+
+  .calendar {
+    grid-template-columns: 1fr; /* 1列にする */
+    gap: 10px;
+  }
+
+  .day {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .time {
+    display: block; /* 横並び→縦 */
+    width: 90%;
+    margin: 10px auto;
+    text-align: center;
+  }
+
+  .form-area form {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  #calendar {
+    width: 100%;
+  }
+}
